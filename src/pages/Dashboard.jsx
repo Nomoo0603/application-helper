@@ -80,7 +80,7 @@ function BarChart({ data, maxValue }) {
   )
 }
 
-function RiskDonut({ data }) {
+function RiskDonut({ data, totalApplicants }) {
   const total = data.reduce((sum, d) => sum + d.percent, 0)
   const segments = data.reduce(
     (acc, segment) => {
@@ -116,7 +116,7 @@ function RiskDonut({ data }) {
           })}
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-2xl font-bold text-white">1,247</span>
+          <span className="text-2xl font-bold text-white">{totalApplicants.toLocaleString()}</span>
           <span className="text-xs text-slate-500">applicants</span>
         </div>
       </div>
@@ -204,11 +204,11 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto px-6 pt-28 pb-16">
         {/* Header */}
         <div className="mb-10">
-          <p className="text-brand-400 font-semibold text-sm uppercase tracking-wider mb-1">Admissions Intelligence</p>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Applicant Friction Dashboard</h1>
+          <p className="text-brand-400 font-semibold text-sm uppercase tracking-wider mb-1">Minerva Admissions Intelligence</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Minerva Applicant Friction Dashboard</h1>
           <p className="text-slate-400 max-w-lg">
-            Anonymous aggregate insights across {d.totalApplicants.toLocaleString()} applicants.
-            See where students get stuck and how to help.
+            Anonymous aggregate insights across {d.totalApplicants.toLocaleString()} Minerva applicants.
+            Surface where candidates struggle with the Minerva-specific process and where admissions can intervene earlier.
           </p>
         </div>
 
@@ -242,19 +242,19 @@ export default function Dashboard() {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-slate-800/50 rounded-2xl border border-slate-700/50 p-6">
                 <h3 className="text-lg font-bold text-white mb-6">Risk Distribution</h3>
-                <RiskDonut data={d.riskDistribution} />
+                <RiskDonut data={d.riskDistribution} totalApplicants={d.totalApplicants} />
               </div>
 
               <div className="bg-slate-800/50 rounded-2xl border border-slate-700/50 p-6">
-                <h3 className="text-lg font-bold text-white mb-6">Friction by Application Stage</h3>
+                <h3 className="text-lg font-bold text-white mb-6">Friction Across the Minerva Journey</h3>
                 <BarChart data={d.stageFriction} maxValue={80} />
               </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-slate-800/50 rounded-2xl border border-slate-700/50 p-6">
-                <h3 className="text-lg font-bold text-white mb-2">High-Risk Applicants Over Time</h3>
-                <p className="text-sm text-slate-500 mb-4">Weekly trend of applicants needing attention</p>
+                <h3 className="text-lg font-bold text-white mb-2">High-Risk Minerva Applicants Over Time</h3>
+                <p className="text-sm text-slate-500 mb-4">Weekly trend of candidates who may need intervention before they drop off</p>
                 <TrendChart data={d.weeklyTrend} />
               </div>
 
@@ -304,7 +304,7 @@ export default function Dashboard() {
           <div className="space-y-6 animate-fade-in">
             <div className="bg-slate-800/50 rounded-2xl border border-slate-700/50 p-6">
               <h3 className="text-lg font-bold text-white mb-2">Most Common Friction Categories</h3>
-              <p className="text-sm text-slate-500 mb-6">Ranked by frequency across all applicants</p>
+              <p className="text-sm text-slate-500 mb-6">Ranked by frequency across Minerva applicants</p>
               <BarChart data={d.blockerBreakdown} maxValue={30} />
             </div>
 
@@ -322,11 +322,11 @@ export default function Dashboard() {
                     <h3 className="text-lg font-semibold text-white">Key Finding</h3>
                   </div>
                   <p className="text-lg text-white leading-relaxed mb-4">
-                    <span className="font-bold">Essay friction</span> is your #1 blocker, affecting 25% of applicants.
-                    It peaks 2 weeks before deadlines.
+                    <span className="font-bold">Online interview friction</span> is the clearest Minerva-specific blocker,
+                    affecting 23% of applicants.
                   </p>
                   <p className="text-brand-200 text-sm leading-relaxed">
-                    Consider offering targeted essay workshops or peer review sessions 3 weeks before major deadlines.
+                    Early setup guidance and a mock practice flow would likely improve both completion and response quality.
                   </p>
                 </div>
               </div>
@@ -347,10 +347,10 @@ export default function Dashboard() {
               <h3 className="text-lg font-semibold text-white mb-4">Recommended Actions</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 {[
-                  'Launch essay workshops 3 weeks before major deadlines',
-                  'Create a dedicated international applicant checklist and timeline',
-                  'Simplify financial aid messaging earlier in the process',
-                  'Build recommendation follow-up templates into the portal',
+                  'Add a Minerva interview practice experience with camera, timing, and prompt previews',
+                  'Restructure extracurricular inputs around action, ownership, and outcome',
+                  'Provide an early quantitative readiness guide with sample math practice',
+                  'Combine international document and aid guidance into one applicant-facing flow',
                 ].map((rec, i) => (
                   <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-slate-700/30 border border-slate-700/50">
                     <div className="w-6 h-6 rounded-full bg-brand-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -368,7 +368,7 @@ export default function Dashboard() {
       {/* Dark footer for dashboard */}
       <footer className="bg-slate-950 border-t border-slate-800 py-8 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-slate-600">ApplyWave Institutions · Admissions Friction Intelligence</p>
+          <p className="text-sm text-slate-600">ApplyWave for Minerva · Admissions Friction Intelligence</p>
           <p className="text-xs text-slate-700">All applicant data is anonymized and aggregated. AI-Assisted Prototype.</p>
         </div>
       </footer>
